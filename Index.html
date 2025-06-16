@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Israel x Palestina - Uma Análise Profunda</title>
+    
+    <!-- Importação das Fontes do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Reset e Configurações Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background-dark: #0D1B2A; /* Azul noturno (frio) */
+            --surface-dark: #1B263B;   /* Azul naval (frio) */
+            --warm-accent-1: #E76F51;   /* Laranja queimado (quente) */
+            --warm-accent-2: #F4A261;   /* Laranja claro (quente) */
+            --warm-gradient: linear-gradient(45deg, var(--warm-accent-1), var(--warm-accent-2));
+            --text-primary: #E0E1DD;    /* Branco sujo */
+            --text-secondary: #778DA9;  /* Azul acinzentado (frio) */
+            --border-color: #415A77;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background-dark);
+            /* Textura de Ruído Sutil */
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><g fill-opacity="0.02" fill="%23e0e1dd"><rect x="0" y="0" width="100" height="100"/><rect x="50" y="50" width="50" height="50"/></g></svg>');
+            color: var(--text-primary);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Tipografia */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        /* Cabeçalho e Navegação */
+        header {
+            background-color: rgba(13, 27, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: top 0.4s ease-out;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            background: var(--warm-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul { list-style: none; display: flex; gap: 2.5rem; }
+        nav a {
+            color: var(--text-primary); text-decoration: none; font-weight: 500;
+            position: relative; padding-bottom: 5px; transition: color 0.3s ease;
+        }
+        nav a::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: 0; left: 50%; transform: translateX(-50%);
+            background: var(--warm-gradient); transition: width 0.4s ease;
+        }
+        nav a:hover { color: var(--warm-accent-2); }
+        nav a:hover::after { width: 100%; }
+        
+        /* Layout Principal */
+        main {
+            padding-top: 80px; /* Espaço para o header fixo */
+        }
+        
+        /* Estilo Geral das Seções */
+        section {
+            padding: 100px 5%; max-width: 1100px;
+            margin: 0 auto; position: relative;
+        }
+
+        .section-title {
+            text-align: center; font-size: 3rem; margin-bottom: 5rem;
+        }
+        .section-title span {
+            background: var(--warm-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Seção do Podcast (VÍDEO) - Agora no Topo */
+        #podcast {
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+        .video-wrapper {
+            position: relative; padding: 10px; border-radius: 12px;
+            background: var(--surface-dark);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        /* Estilo para o player de vídeo local */
+        .video-wrapper video {
+            width: 100%;
+            border-radius: 10px;
+            display: block; /* Remove espaço extra abaixo do vídeo */
+        }
+        
+        /* Seção de Introdução com Partículas */
+        #intro {
+            min-height: 80vh;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center;
+            padding: 0 5%; position: relative; overflow: hidden;
+            border-top: 1px solid var(--border-color);
+        }
+        #particles-js {
+            position: absolute; width: 100%; height: 100%; top: 0; left: 0;
+            z-index: 0;
+        }
+        #intro h1, #intro p {
+            position: relative;
+            z-index: 1;
+        }
+        #intro h1 {
+            font-size: 4.5rem; margin-bottom: 1rem; letter-spacing: 2px;
+            font-weight: 900;
+            text-shadow: 0 0 15px rgba(231, 111, 81, 0.5), 0 0 30px rgba(231, 111, 81, 0.3);
+        }
+        #intro h1 span {
+            background: var(--warm-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #intro p {
+            font-size: 1.2rem; color: var(--text-secondary); max-width: 700px;
+            font-weight: 300;
+        }
+
+        /* Linha do Tempo Interativa */
+        #timeline {
+            border-top: 1px solid var(--border-color);
+        }
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline::after {
+            content: ''; position: absolute; width: 4px;
+            background: var(--surface-dark);
+            top: 0; bottom: 0; left: 50%; margin-left: -2px; z-index: -1;
+        }
+        .timeline-item {
+            padding: 10px 40px; position: relative; background-color: inherit;
+            width: 50%; opacity: 0; transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .timeline-item.visible { opacity: 1; transform: translateY(0); }
+        .timeline-item:nth-child(odd) { left: 0; padding-right: 70px; text-align: right; }
+        .timeline-item:nth-child(even) { left: 50%; padding-left: 70px; }
+        .timeline-item::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            right: -10px; background-color: var(--background-dark);
+            border: 4px solid var(--warm-accent-1);
+            top: 25px; border-radius: 50%; z-index: 1;
+            transition: all 0.4s ease;
+        }
+        .timeline-item:hover::after {
+            transform: scale(1.3);
+            background: var(--warm-gradient);
+            border-color: var(--warm-accent-2);
+        }
+        .timeline-item:nth-child(even)::after { left: -10px; }
+        .timeline-content {
+            padding: 2rem; background-color: var(--surface-dark);
+            position: relative; border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(244, 162, 97, 0.2);
+        }
+        .timeline-content h3 {
+            color: var(--warm-accent-1); margin-bottom: 0.5rem; font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        .timeline-content:hover h3 { color: var(--warm-accent-2); }
+        .timeline-content p { font-weight: 300; color: var(--text-secondary); }
+
+        /* Rodapé */
+        footer {
+            background-color: var(--surface-dark); color: var(--text-secondary);
+            text-align: center; padding: 4rem 5%;
+            border-top: 1px solid var(--border-color);
+        }
+        footer h3 { font-size: 2rem; margin-bottom: 1rem; }
+        footer h3 span {
+            background: var(--warm-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        footer p { font-size: 1.1rem; margin-bottom: 2rem; }
+        footer .direitos { font-size: 0.9rem; }
+        
+        /* Botão Voltar ao Topo */
+        #back-to-top {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--warm-gradient);
+            color: #000; border: none; border-radius: 50%;
+            width: 50px; height: 50px; font-size: 24px;
+            display: none; justify-content: center; align-items: center;
+            cursor: pointer; text-decoration: none;
+            transition: all 0.3s; z-index: 100;
+        }
+        #back-to-top:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 5px 15px rgba(231, 111, 81, 0.4);
+        }
+        
+        /* Animações de Entrada */
+        .animate-on-scroll {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        
+        /* Media Queries para Responsividade */
+        @media (max-width: 768px) {
+            header { flex-direction: column; padding: 1rem; }
+            nav ul { margin-top: 1rem; gap: 1.5rem; }
+            #intro h1 { font-size: 2.8rem; }
+            #intro p { font-size: 1rem; }
+            .section-title { font-size: 2.2rem; }
+            .timeline::after { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item:nth-child(odd), .timeline-item:nth-child(even) { 
+                left: 0; text-align: left;
+            }
+            .timeline-item::after { left: 10px; }
+        }
+    </style>
+</head>
+<body id="topo">
+
+    <!-- CABEÇALHO -->
+    <header id="main-header">
+        <div class="logo">Análise Profunda</div>
+        <nav>
+            <ul>
+                <li><a href="#podcast">Podcast</a></li>
+                <li><a href="#intro">Introdução</a></li>
+                <li><a href="#timeline">Linha do Tempo</a></li>
+                <li><a href="#equipe">Equipe</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- SEÇÃO DO PODCAST (VÍDEO) - AGORA NO TOPO -->
+        <section id="podcast">
+            <h2 class="section-title animate-on-scroll">Nosso Podcast <span>em Vídeo</span></h2>
+            <div class="video-wrapper animate-on-scroll">
+                <!-- VÍDEO LOCAL -->
+                <video controls>
+                    <source src="pod.mp4" type="video/mp4">
+                    Seu navegador não suporta o elemento de vídeo. Tente usar um navegador mais moderno.
+                </video>
+            </div>
+        </section>
+
+        <!-- SEÇÃO DE INTRODUÇÃO COM PARTÍCULAS -->
+        <section id="intro">
+            <div id="particles-js"></div>
+            <h1 class="animate-on-scroll">Israel <span>x</span> Palestina</h1>
+            <p class="animate-on-scroll" style="transition-delay: 0.2s;">Uma análise imersiva sobre as origens, os desdobramentos e as perspectivas de um dos conflitos mais complexos da história.</p>
+        </section>
+
+        <!-- SEÇÃO LINHA DO TEMPO -->
+        <section id="timeline">
+            <h2 class="section-title animate-on-scroll">Uma Jornada <span>pela História</span></h2>
+            <div class="timeline">
+                
+                <div class="timeline-item"><div class="timeline-content"><h3>1917: Declaração Balfour</h3><p>O governo britânico declara apoio ao estabelecimento de um "lar nacional para o povo judeu" na Palestina, lançando as bases para futuras tensões.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><h3>1947-1948: Partilha e Guerra</h3><p>A ONU aprova o plano de partilha da Palestina. A declaração de independência de Israel é seguida pela Primeira Guerra Árabe-Israelense.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><h3>1967: Guerra dos Seis Dias</h3><p>Israel captura a Faixa de Gaza, a Cisjordânia, Jerusalém Oriental, as Colinas de Golã e a Península do Sinai, mudando o mapa da região.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><h3>1987-1993: Primeira Intifada</h3><p>Um levante palestino em massa contra a ocupação israelense se inicia, levando a anos de confrontos e, eventualmente, aos Acordos de Oslo.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><h3>2000: Segunda Intifada</h3><p>O colapso das negociações de paz leva a um segundo levante, mais violento, aprofundando a desconfiança e o ciclo de violência.</p></div></div>
+                <div class="timeline-item"><div class="timeline-content"><h3>Hoje: Desafios Atuais</h3><p>O conflito persiste com questões não resolvidas como os assentamentos, o status de Jerusalém e o bloqueio de Gaza, enquanto a comunidade internacional busca paz.</p></div></div>
+
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- RODAPÉ -->
+    <footer id="equipe">
+        <div class="animate-on-scroll">
+            <h3>Nossa <span>Equipe</span></h3>
+            <p>
+                <!-- SUBSTITUA PELOS NOMES DOS INTEGRANTES -->
+                Pessoa 1, Pessoa 2, Pessoa 3, Pessoa 4, Pessoa 5
+            </p>
+            <div class="direitos">
+                <p>&copy; 2025 | Direitos reservados alunos E. E. Jose Elias Issa, turma 306</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão "Voltar ao Topo" -->
+    <a href="#topo" id="back-to-top" aria-label="Voltar ao topo">↑</a>
+
+    <!-- Script para Partículas (particles.js) -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Configuração do particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#415a77" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 0.5, "opacity_min": 0.1, "sync": false } },
+                "size": { "value": 2, "random": true, "anim": { "enable": false } },
+                "line_linked": { "enable": false },
+                "move": { "enable": true, "speed": 0.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false }, "onclick": { "enable": false }, "resize": true } },
+            "retina_detect": true
+        });
+
+
+        // Animação de elementos ao rolar a página
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.classList.contains('timeline-item') ? index * 100 : 0;
+                    setTimeout(() => { entry.target.classList.add('visible'); }, delay);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll, .timeline-item');
+        elementsToAnimate.forEach(el => observer.observe(el));
+        
+        // Mostrar/esconder o botão "Voltar ao Topo" e o header
+        const backToTopButton = document.getElementById('back-to-top');
+        const header = document.getElementById('main-header');
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            backToTopButton.style.display = (scrollTop > 300) ? 'flex' : 'none';
+
+            if (scrollTop > lastScrollTop && scrollTop > header.offsetHeight){
+                header.style.top = `-${header.offsetHeight}px`;
+            } else {
+                header.style.top = "0";
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+    });
+    </script>
+</body>
+</html>
